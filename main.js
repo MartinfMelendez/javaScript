@@ -6,7 +6,7 @@ Una vez que el jugador adivine el numero o se quede sin intentos el sistema le p
 Se debera crear una funcion para validar si el numero ingresado por el usuario es valido y esta dentro del rango 0 a 10*/
 
 const validarNumero = (num) => {
-  if (isNaN(num) || num < 0 || num > 11) {
+  if (isNaN(num) || num < 0 || num > 10) {
     alert(
       "El numero ingresado no es valdio o se encuentra fuera del rango 0 al 10"
     );
@@ -20,25 +20,44 @@ let continuar = true;
 let cpu = Math.floor(Math.random() * 11);
 let intentos = 3;
 
-do {
-  const numUser = parseInt(prompt("Ingrese un numero entre 0 y 10"));
-  if (!validarNumero(numUser)) {
-    continue;
-  }
+const reiniciar = () => {
+  intentos = 3;
+  cpu = Math.floor(Math.random() * 11);
+};
 
-  if (cpu === numUser) {
-    alert("Felicitaciones!. Adivinaste el numero");
-    continuar = false;
-  } else if (numUser < cpu) {
-    alert("El numero ingresado es mas chico");
-    intentos--;
-  } else {
-    alert("El numero ingresado es mas grande");
-    intentos--;
-  }
+function adivinarNumero() {
+  console.log(cpu);
+  console.log(intentos);
+  do {
+    const numUser = parseInt(prompt("Ingrese un numero entre 0 y 10"));
+    if (!validarNumero(numUser)) {
+      continue;
+    }
 
-  if (intentos === 0) {
-    alert("No has logrado adivinar el numero");
-    continuar = false
-  }
-} while (continuar);
+    if (cpu === numUser) {
+      alert("Felicitaciones!. Adivinaste el numero");
+      if (confirm("Desea jugar de nuevo")) {
+        reiniciar();
+      } else {
+        break;
+      }
+    } else if (numUser < cpu) {
+      alert("El numero ingresado es mas chico");
+      intentos--;
+    } else {
+      alert("El numero ingresado es mas grande");
+      intentos--;
+    }
+
+    if (intentos > 0) {
+      alert(`Te quedan ${intentos} intentos`);
+    } else {
+            if (confirm("No has logrado adivinar el numero. Desea jugar de nuevo?")) {
+        reiniciar();
+      } else {
+        break;
+      }
+    }
+  } while (continuar);
+}
+adivinarNumero();
