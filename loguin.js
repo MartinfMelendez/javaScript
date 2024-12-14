@@ -43,8 +43,6 @@ function crearUsuario() {
     }
   }
 }
-crearUsuario();
-console.table(listaUsuarios);
 
 function buscarUsuario(nombre, edad) {
   const buscar = listaUsuarios.find(
@@ -53,12 +51,29 @@ function buscarUsuario(nombre, edad) {
   if (!buscar) {
     alert("El usuario buscado no existe");
   } else {
-    alert(`Usuario encontrado`);
+    alert(`Usuario encontrado ${buscar.nombre}, Edad: ${buscar.edad}`);
   }
 }
 
+function eliminarUsuario(nombre) {
+  const buscarIndice = listaUsuarios.findIndex((x) => x.nombre === nombre); //Busco el indice del elemento que quiero eliminar
+  if (buscarIndice === -1) {
+    alert("El usuario no se encuentra ");
+  } else {
+  //Elimino el usuario en base al indice que devuelve buscarIndice
+    listaUsuarios.splice(buscarIndice, 1)
+      //Muestro en consola el array sin el elemento eliminado
+    console.table(listaUsuarios);
+  }
+}
+
+crearUsuario(); //Se llama a la funcion crearUsuario
+console.table(listaUsuarios);
+
 buscarUsuario(
+  //Se llama a la funcion buscarUsuario
   prompt("Que usuario quiere buscar?").toUpperCase().trim(),
   parseInt(prompt("Ingrese su edad").trim())
 );
-function eliminarUsuario() {}
+
+eliminarUsuario(prompt("Ingrese el nombre").toUpperCase().trim()); //Se llama a la funcion eliminar usuario
