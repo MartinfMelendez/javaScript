@@ -1,5 +1,6 @@
 /*Se debe crear un programa en el cual se permite cargar un nombre y la edad de la persona
   A demas se debe agregar la posibilidad de buscar y mostrar un mensaje en caso del que el nombre exista como asi si no existiera
+  Se debe crear una funcion para poder eliminar un usuario
   Se debe validar que los datos que ingresa el usuario sean correcto y el usuario no puede tener mas de 110 años */
 
 function Usuarios(nombre, edad) {
@@ -45,8 +46,10 @@ function crearUsuario() {
 crearUsuario();
 console.table(listaUsuarios);
 
-function buscarUsuario(nombre) {
-  const buscar = listaUsuarios.find((x) => x.nombre === nombre);
+function buscarUsuario(nombre, edad) {
+  const buscar = listaUsuarios.find(
+    (x) => x.nombre === nombre && x.edad === edad
+  );
   if (!buscar) {
     alert("El usuario buscado no existe");
   } else {
@@ -54,5 +57,8 @@ function buscarUsuario(nombre) {
   }
 }
 
-buscarUsuario(prompt("Que usuario quiere buscar?").toUpperCase().trim());
+buscarUsuario(
+  prompt("Que usuario quiere buscar?").toUpperCase().trim(),
+  parseInt(prompt("Ingrese su edad").trim())
+);
 function eliminarUsuario() {}
