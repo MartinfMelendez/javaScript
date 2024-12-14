@@ -1,4 +1,6 @@
-//Creamos un sistema de logueo
+/*Se debe crear un programa en el cual se permite cargar un nombre y la edad de la persona
+  A demas se debe agregar la posibilidad de buscar y mostrar un mensaje en caso del que el nombre exista como asi si no existiera
+  Se debe validar que los datos que ingresa el usuario sean correcto y el usuario no puede tener mas de 110 años */
 
 function Usuarios(nombre, edad) {
   this.nombre = nombre;
@@ -6,7 +8,7 @@ function Usuarios(nombre, edad) {
 }
 
 const validarDatos = (nombre, edad) => {
-  if (nombre === "" || edad < 1 || isNaN(edad)) {
+  if (nombre === "" || edad < 1 || edad > 110 || isNaN(edad)) {
     alert("Debe ingresar un nombre o edad valido");
     return false;
   } else {
