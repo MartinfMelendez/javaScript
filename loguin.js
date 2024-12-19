@@ -81,6 +81,22 @@ function eliminarUsuario() {
   }
 }
 
+//Funcion para poder modificar un usuario agregado
+function modificarUsuario() {
+  let nombre = prompt("Ingrese el nombre").toUpperCase().trim();
+  const buscarIndice = listaUsuarios.findIndex((x) => x.nombre === nombre);
+  if (buscarIndice === -1) {
+    alert("El usuario que ingreso no existe");
+  } else {
+    let newName = prompt("Ingrese el nombre").toUpperCase().trim();
+    let edad = parseInt(prompt("Ingrese su edad").trim());
+    if (!validarDatos(newName, edad)) {
+      return;
+    }
+    listaUsuarios.splice(buscarIndice, 1, new Usuarios(newName,edad));
+  }
+}
+
 //Se llama a la funcion crearUsuario
 crearUsuario();
 
