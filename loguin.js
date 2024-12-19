@@ -4,15 +4,17 @@
   Se debe validar que los datos que ingresa el usuario sean correcto y el usuario no puede tener mas de 110 años */
 
 //Se crea una funcion constructora para el objeto
-function Usuarios(nombre, edad) {
+function Usuarios(nombre, apellido, email, contraseña) {
   this.nombre = nombre;
-  this.edad = edad;
+  this.apellido = apellido;
+  this.email = email;
+  this.contraseña = contraseña;
 }
 
 //Se valida los datos que se reciben
-const validarDatos = (nombre, edad) => {
-  if (nombre === "" || edad < 1 || edad > 110 || isNaN(edad)) {
-    alert("Debe ingresar un nombre o edad valido");
+const validarDatos = (nombre, apellido, email, contraseña) => {
+  if (nombre === "" || apellido === "" || email === "" || contraseña === "") {
+    alert("Debe de completar todos los datos solicitados");
     return false;
   } else {
     return true;
@@ -25,26 +27,29 @@ const listaUsuarios = [];
 //Funcion para crear un usuario
 function crearUsuario() {
   while (true) {
-    let nombre = prompt("Ingrese el nombre").toUpperCase().trim(); //Se utilizan las funciones uppercase y trim para evitar mayusculas y espacios innecesarios
-    let edad = parseInt(prompt("Ingrese su edad").trim());
-    if (!validarDatos(nombre, edad)) {
+    //Se utilizan las funciones uppercase y trim para evitar mayusculas y espacios innecesarios
+    let nombre = prompt("Ingrese el nombre").toUpperCase().trim();
+    let apellido = prompt("Ingrese su apellido").toUpperCase().trim();
+    let email = prompt("Ingrese su email").toUpperCase().trim();
+    let contraseña = prompt("Ingrese su contraseña".trim());
+    if (!validarDatos(nombre, apellido, email, contraseña)) {
       //Llamo a la funcion validar datos.
       continue;
     }
 
-    let usuario = new Usuarios(nombre, edad);
+    let usuario = new Usuarios(nombre, apellido, email, contraseña);
     const existeUsuario = listaUsuarios.some(
-      //Utilizo la funcion some para ver si el usuario y la edad ingresadas ya existe
-      (x) => x.nombre === nombre && x.edad === edad
+      //Utilizo la funcion some para que el email ingresado no exista
+      (x) => x.email === email
     );
     if (existeUsuario) {
-      alert("El usuario ingresado ya existe");
+      alert("Ya existe un usuario con este email. Verifique por favor");
       continue;
     } else {
       listaUsuarios.push(usuario); //Si el usuario ingresado no existe, lo agrega al array
     }
     console.table(listaUsuarios);
-    if (!confirm("Desea ingresar otro usuario?")) {
+    if (!confirm("Desea crear otra cuenta?")) {
       break;
     }
   }
@@ -52,25 +57,27 @@ function crearUsuario() {
 
 //Funcion para buscar un usuario
 function buscarUsuario() {
-  let nombre = prompt("Que usuario quiere buscar?").toUpperCase().trim();
-  let edad = parseInt(prompt("Ingrese su edad").trim());
+  let email = prompt("Ingrese su email").toUpperCase().trim();
+  let contraseña = prompt("Ingrese su contraseña").trim();
 
   const buscar = listaUsuarios.find(
     //Busco al usuario ingresado en el array
-    (x) => x.nombre === nombre && x.edad === edad
+    (x) => x.email === email && x.contraseña === contraseña
   );
   if (!buscar) {
     alert("El usuario buscado no existe");
   } else {
-    alert(`Usuario encontrado ${buscar.nombre}, Edad: ${buscar.edad}`);
+    alert(`Nombre: ${buscar.nombre}, Apellido: ${buscar.apellido}`);
   }
 }
 
 //Funcion para eliminar un usuario
 function eliminarUsuario() {
-  let nombre = prompt("Que usuario quiere eliminar").toUpperCase().trim();
-  let edad = praseInt(prompt("Ingrese la edad")).trim();
-  const buscarIndice = listaUsuarios.findIndex((x) => x.nombre === nombre); //Busco el indice del elemento que quiero eliminar
+  let email = prompt("Que usuario quiere eliminar").toUpperCase().trim();
+  let contraseña = prompt("Ingrese la contraseña").trim();
+  const buscarIndice = listaUsuarios.findIndex(
+    (x) => x.email === email && x.contraseña === contraseña
+  ); //Busco el indice del elemento que quiero eliminar
   if (buscarIndice === -1) {
     alert("El usuario no se encuentra ");
   } else {
@@ -83,21 +90,22 @@ function eliminarUsuario() {
 }
 
 //Funcion para poder modificar un usuario agregado
-function modificarUsuario() {
-  let nombre = prompt("Que usuario quiere modificar?").toUpperCase().trim();
-  const buscarIndice = listaUsuarios.findIndex((x) => x.nombre === nombre);
-  if (buscarIndice === -1) {
-    alert("El usuario que ingreso no existe");
-  } else {
-    let newName = prompt("Ingrese el nuevo nombre").toUpperCase().trim();
-    let edad = parseInt(prompt("Ingrese la edad").trim());
-    if (!validarDatos(newName, edad)) {
-      return;
-    }
-    listaUsuarios.splice(buscarIndice, 1, new Usuarios(newName, edad));
-    console.table(listaUsuarios);
-  }
+function modificarContraseñaUsuario() {
+  let email = prompt("Ingrese el mail del usuario que quiere modificar?").toUpperCase().trim();
+  let contraseña = prompt("Ingrese su contraseña").trim();
+  const buscarUsuario = listaUsuarios.find(
+    (x) => x.email === email && x.contraseña === contraseña
+  );
+if(!buscarUsuario){
+  alert('El usuario que intenta modificar no existe. Verifique Por favor')
+} else {
+  let newPassword = prompt('Ingrese su nueva contraseña')
+  buscarUsuario.contraseña = newPassword
+  alert('Se modifico correctamente la contraseña')
+  console.table(listaUsuarios)
 }
+  }
+
 
 //Se llama a la funcion crearUsuario
 crearUsuario();
@@ -109,4 +117,4 @@ buscarUsuario();
 eliminarUsuario();
 
 //Se llama a la funcion modificar usuario
-modificarUsuario();
+modificarContraseñaUsuario();
