@@ -69,6 +69,7 @@ function buscarUsuario() {
 //Funcion para eliminar un usuario
 function eliminarUsuario() {
   let nombre = prompt("Que usuario quiere eliminar").toUpperCase().trim();
+  let edad = praseInt(prompt("Ingrese la edad")).trim();
   const buscarIndice = listaUsuarios.findIndex((x) => x.nombre === nombre); //Busco el indice del elemento que quiero eliminar
   if (buscarIndice === -1) {
     alert("El usuario no se encuentra ");
@@ -93,8 +94,8 @@ function modificarUsuario() {
     if (!validarDatos(newName, edad)) {
       return;
     }
-    listaUsuarios.splice(buscarIndice, 1, new Usuarios(newName,edad));
-    console.table(listaUsuarios)
+    listaUsuarios.splice(buscarIndice, 1, new Usuarios(newName, edad));
+    console.table(listaUsuarios);
   }
 }
 
@@ -108,4 +109,4 @@ buscarUsuario();
 eliminarUsuario();
 
 //Se llama a la funcion modificar usuario
-modificarUsuario()
+modificarUsuario();
