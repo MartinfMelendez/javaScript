@@ -28,7 +28,7 @@ const listaUsuarios = [];
 function crearUsuario() {
   while (true) {
     //Se utilizan las funciones uppercase y trim para evitar mayusculas y espacios innecesarios
-    let nombre = prompt("Ingrese el nombre").toUpperCase().trim();
+    let nombre = prompt("Ingrese su nombre").toUpperCase().trim();
     let apellido = prompt("Ingrese su apellido").toUpperCase().trim();
     let email = prompt("Ingrese su email").toUpperCase().trim();
     let contraseña = prompt("Ingrese su contraseña".trim());
@@ -42,7 +42,7 @@ function crearUsuario() {
       //Utilizo la funcion some para que el email ingresado no exista
       (x) => x.email === email
     );
-    if (existeUsuario) {
+    if (existeUsuario) {//Si el mail ingresado ya se encuentra dentro del array no se permite agregar el nuevo objeto
       alert("Ya existe un usuario con este email. Verifique por favor");
       continue;
     } else {
@@ -57,7 +57,7 @@ function crearUsuario() {
 
 //Funcion para buscar un usuario
 function buscarUsuario() {
-  let email = prompt("Ingrese su email").toUpperCase().trim();
+  let email = prompt("Ingrese el mail del usuario que quiere buscar").toUpperCase().trim();
   let contraseña = prompt("Ingrese su contraseña").trim();
 
   const buscar = listaUsuarios.find(
@@ -65,9 +65,9 @@ function buscarUsuario() {
     (x) => x.email === email && x.contraseña === contraseña
   );
   if (!buscar) {
-    alert("El usuario buscado no existe");
+    alert("El usuario o contraseña que ingreso no son correctos");
   } else {
-    alert(`Nombre: ${buscar.nombre}, Apellido: ${buscar.apellido}`);
+    alert(`Los datos del usuario son: Nombre: ${buscar.nombre}- Apellido: ${buscar.apellido}`);
   }
 }
 
@@ -79,7 +79,7 @@ function eliminarUsuario() {
     (x) => x.email === email && x.contraseña === contraseña
   ); //Busco el indice del elemento que quiero eliminar
   if (buscarIndice === -1) {
-    alert("El usuario no se encuentra ");
+    alert("El usuario que intenta eliminar no existe");
   } else {
     //Elimino el usuario en base al indice que devuelve buscarIndice
     listaUsuarios.splice(buscarIndice, 1);
@@ -93,14 +93,14 @@ function eliminarUsuario() {
 function modificarContraseñaUsuario() {
   let email = prompt("Ingrese el mail del usuario que quiere modificar?").toUpperCase().trim();
   let contraseña = prompt("Ingrese su contraseña").trim();
-  const buscarUsuario = listaUsuarios.find(
+  const buscarUsuario = listaUsuarios.find(//Uso el metodo find() para buscar el usuario
     (x) => x.email === email && x.contraseña === contraseña
   );
 if(!buscarUsuario){
   alert('El usuario que intenta modificar no existe. Verifique Por favor')
 } else {
   let newPassword = prompt('Ingrese su nueva contraseña')
-  buscarUsuario.contraseña = newPassword
+  buscarUsuario.contraseña = newPassword //Se modifica la contraseña del usuio ingresado
   alert('Se modifico correctamente la contraseña')
   console.table(listaUsuarios)
 }
