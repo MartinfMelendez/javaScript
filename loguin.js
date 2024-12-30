@@ -100,7 +100,7 @@ if(!buscarUsuario){
   alert('El usuario que intenta modificar no existe. Verifique Por favor')
 } else {
   let newPassword = prompt('Ingrese su nueva contraseña')
-  buscarUsuario.contraseña = newPassword //Se modifica la contraseña del usuio ingresado
+  buscarUsuario.contraseña = newPassword //Se modifica la contraseña del usuario ingresado
   alert('Se modifico correctamente la contraseña')
   console.table(listaUsuarios)
 }
