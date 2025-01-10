@@ -14,7 +14,7 @@ function Productos(id, imagen, nombre, precio, stock) {
 
 //Se valida los datos que se reciben
 const validarDatos = (img, nombre, precio, stock) => {
-  if (img === "" || nombre === "" || isNaN(precio)|| isNaN(stock)) {
+  if (img === "" || nombre === "" || isNaN(precio) || isNaN(stock)) {
     alert("Debe de completar todos los datos solicitados");
     return false;
   } else {
@@ -34,31 +34,33 @@ function crearProducto() {
   let precio = document.getElementById('precio')
   let stock = document.getElementById('stock')
 
-  if (!validarDatos(imagen.value, nombre.value, parseFloat(precio.value), parseInt(stock.value))) {
+  if (!validarDatos(imagen.value.trim().toUpperCase, nombre.value.trim().toUpperCase(), parseFloat(precio.value.trim()), parseInt(stock.value.trim()))) {
     //Llamo a la funcion validar datos.
     return
   }
 
   let id = listaProductos.length > 0 ? listaProductos[listaProductos.length - 1].id + 1 : 1
 
-  let producto = new Productos(id, imagen.value, nombre.value, parseFloat(precio.value), parseInt(stock.value));
+  let producto = new Productos(id, imagen.value.trim().toUpperCase(), nombre.value.trim().toUpperCase(), parseFloat(precio.value.trim()), parseInt(stock.value.trim()));
 
   const existeProducto = listaProductos.some(
-    //Utilizo la funcion some para que el email ingresado no exista
+    //Utilizo la funcion some para que el producto ingresado no exista
     (x) => x.nombre === nombre.value
   );
   if (existeProducto) {
-    //Si el mail ingresado ya se encuentra dentro del array no se permite agregar el nuevo objeto
+    //Si el producto ingresado ya se encuentra dentro del array no se permite agregar el nuevo objeto
     alert("Ya existe un producto con este nombre. Verifique por favor");
 
   } else {
-    listaProductos.push(producto); //Si el usuario ingresado no existe, lo agrega al array
+    listaProductos.push(producto); //Si el producto ingresado no existe, lo agrega al array
   }
 
+  //Al terminar de agregar el producto limpio los inputs para una nueva carga
   imagen.value = ''
   nombre.value = ''
   precio.value = ''
   stock.value = ''
+  //Listo por consola en forma de tabla para visualizar lo que se agrega
   console.table(listaProductos);
 
 }
