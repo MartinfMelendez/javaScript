@@ -52,7 +52,9 @@ function crearProducto() {
     alert("Ya existe un producto con este nombre. Verifique por favor");
 
   } else {
-    listaProductos.push(producto); //Si el producto ingresado no existe, lo agrega al array
+    listaProductos.push(producto)
+    let productosJson = JSON.stringify(listaProductos)
+    localStorage.setItem('productos',productosJson); //Si el producto ingresado no existe, lo agrega al array
   }
 
   //Al terminar de agregar el producto limpio los inputs para una nueva carga
