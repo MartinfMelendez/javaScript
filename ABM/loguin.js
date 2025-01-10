@@ -4,16 +4,17 @@
   Se debe validar que los datos que ingresa el usuario sean correcto y el usuario no puede tener mas de 110 años */
 
 //Se crea una funcion constructora para el objeto
-function Usuarios(nombre, apellido, email, contraseña) {
-  this.nombre = nombre;
-  this.apellido = apellido;
-  this.email = email;
-  this.contraseña = contraseña;
+function Productos(id, imagen, nombre, precio, stock) {
+  this.id = id,
+    this.imagen = imagen,
+    this.nombre = nombre,
+    this.precio = precio,
+    this.stock = stock;
 }
 
 //Se valida los datos que se reciben
-const validarDatos = (nombre, apellido, email, contraseña) => {
-  if (nombre === "" || apellido === "" || email === "" || contraseña === "") {
+const validarDatos = (img, nombre, precio, stock) => {
+  if (img === "" || nombre === "" || isNaN(precio)|| isNaN(stock)) {
     alert("Debe de completar todos los datos solicitados");
     return false;
   } else {
@@ -22,42 +23,51 @@ const validarDatos = (nombre, apellido, email, contraseña) => {
 };
 
 //Se crea este array para almacenar los objetos
-const listaUsuarios = [];
+const listaProductos = [];
 
 //Funcion para crear un usuario
-function crearUsuario() {
-  while (true) {
-    //Se utilizan las funciones uppercase y trim para evitar mayusculas y espacios innecesarios
-    let nombre = prompt("Ingrese su nombre").toUpperCase().trim();
-    let apellido = prompt("Ingrese su apellido").toUpperCase().trim();
-    let email = prompt("Ingrese su email").toUpperCase().trim();
-    let contraseña = prompt("Ingrese su contraseña".trim());
-    if (!validarDatos(nombre, apellido, email, contraseña)) {
-      //Llamo a la funcion validar datos.
-      continue;
-    }
+function crearProducto() {
 
-    let usuario = new Usuarios(nombre, apellido, email, contraseña);
-    const existeUsuario = listaUsuarios.some(
-      //Utilizo la funcion some para que el email ingresado no exista
-      (x) => x.email === email
-    );
-    if (existeUsuario) {//Si el mail ingresado ya se encuentra dentro del array no se permite agregar el nuevo objeto
-      alert("Ya existe un usuario con este email. Verifique por favor");
-      continue;
-    } else {
-      listaUsuarios.push(usuario); //Si el usuario ingresado no existe, lo agrega al array
-    }
-    console.table(listaUsuarios);
-    if (!confirm("Desea crear otra cuenta?")) {
-      break;
-    }
+  //Se crean variables para referenciar los elementos del HTML
+  let imagen = document.getElementById('img')
+  let nombre = document.getElementById('nombre')
+  let precio = document.getElementById('precio')
+  let stock = document.getElementById('stock')
+
+  if (!validarDatos(imagen.value, nombre.value, parseFloat(precio.value), parseInt(stock.value))) {
+    //Llamo a la funcion validar datos.
+    return
   }
+
+  let id = listaProductos.length > 0 ? listaProductos[listaProductos.length - 1].id + 1 : 1
+
+  let producto = new Productos(id, imagen.value, nombre.value, parseFloat(precio.value), parseInt(stock.value));
+
+  const existeProducto = listaProductos.some(
+    //Utilizo la funcion some para que el email ingresado no exista
+    (x) => x.nombre === nombre.value
+  );
+  if (existeProducto) {
+    //Si el mail ingresado ya se encuentra dentro del array no se permite agregar el nuevo objeto
+    alert("Ya existe un producto con este nombre. Verifique por favor");
+
+  } else {
+    listaProductos.push(producto); //Si el usuario ingresado no existe, lo agrega al array
+  }
+
+  imagen.value = ''
+  nombre.value = ''
+  precio.value = ''
+  stock.value = ''
+  console.table(listaProductos);
+
 }
 
 //Funcion para buscar un usuario
 function buscarUsuario() {
-  let email = prompt("Ingrese el mail del usuario que quiere buscar").toUpperCase().trim();
+  let email = prompt("Ingrese el mail del usuario que quiere buscar")
+    .toUpperCase()
+    .trim();
   let contraseña = prompt("Ingrese su contraseña").trim();
 
   const buscar = listaUsuarios.find(
@@ -67,7 +77,9 @@ function buscarUsuario() {
   if (!buscar) {
     alert("El usuario o contraseña que ingreso no son correctos");
   } else {
-    alert(`Los datos del usuario son: Nombre: ${buscar.nombre}- Apellido: ${buscar.apellido}`);
+    alert(
+      `Los datos del usuario son: Nombre: ${buscar.nombre}- Apellido: ${buscar.apellido}`
+    );
   }
 }
 
@@ -91,32 +103,35 @@ function eliminarUsuario() {
 
 //Funcion para poder modificar un usuario agregado
 function modificarContraseñaUsuario() {
-  let email = prompt("Ingrese el mail del usuario que quiere modificar?").toUpperCase().trim();
+  let email = prompt("Ingrese el mail del usuario que quiere modificar?")
+    .toUpperCase()
+    .trim();
   let contraseña = prompt("Ingrese su contraseña").trim();
-  const buscarUsuario = listaUsuarios.find(//Uso el metodo find() para buscar el usuario
+  const buscarUsuario = listaUsuarios.find(
+    //Uso el metodo find() para buscar el usuario
     (x) => x.email === email && x.contraseña === contraseña
   );
-if(!buscarUsuario){
-  alert('El usuario que intenta modificar no existe. Verifique Por favor')
-} else {
-  let newPassword = prompt('Ingrese su nueva contraseña')
-  buscarUsuario.contraseña = newPassword //Se modifica la contraseña del usuario ingresado
-  alert('Se modifico correctamente la contraseña')
-  console.table(listaUsuarios)
-}
+  if (!buscarUsuario) {
+    alert("El usuario que intenta modificar no existe. Verifique Por favor");
+  } else {
+    let newPassword = prompt("Ingrese su nueva contraseña");
+    buscarUsuario.contraseña = newPassword; //Se modifica la contraseña del usuario ingresado
+    alert("Se modifico correctamente la contraseña");
+    console.table(listaUsuarios);
   }
+}
+const agregar = document.getElementById('agregar')
 
+agregar.addEventListener('click', crearProducto)
 
 //Se llama a la funcion crearUsuario
-crearUsuario();
+// crearUsuario();
 
 //Se llama a la funcion buscarUsuario
-buscarUsuario();
+// buscarUsuario();
 
 //Se llama a la funcion eliminar usuario
-eliminarUsuario();
+// eliminarUsuario();
 
 //Se llama a la funcion modificar usuario
-modificarContraseñaUsuario();
-
-
+// modificarContraseñaUsuario();
