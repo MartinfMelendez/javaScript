@@ -52,9 +52,9 @@ function crearProducto() {
     alert("Ya existe un producto con este nombre. Verifique por favor");
 
   } else {
-    listaProductos.push(producto)
+    listaProductos.push(producto)//Si el producto ingresado no existe, lo agrega al array
     let productosJson = JSON.stringify(listaProductos)
-    localStorage.setItem('productos',productosJson); //Si el producto ingresado no existe, lo agrega al array
+    localStorage.setItem('productos', productosJson);
   }
 
   //Al terminar de agregar el producto limpio los inputs para una nueva carga
@@ -68,40 +68,38 @@ function crearProducto() {
 }
 
 //Funcion para buscar un usuario
-function buscarUsuario() {
-  let email = prompt("Ingrese el mail del usuario que quiere buscar")
-    .toUpperCase()
-    .trim();
-  let contraseña = prompt("Ingrese su contraseña").trim();
+function buscarProducto() {
 
-  const buscar = listaUsuarios.find(
+  let producto = document.getElementById('buscador')
+  
+
+  const buscar = listaProductos.find(
     //Busco al usuario ingresado en el array
-    (x) => x.email === email && x.contraseña === contraseña
+    (x) => x.nombre === producto.value.toUpperCase().trim()//Se utiliza estas propiedades para controlar lo que se carga
   );
   if (!buscar) {
-    alert("El usuario o contraseña que ingreso no son correctos");
+    alert("El producto buscado no se encuentra");
   } else {
     alert(
-      `Los datos del usuario son: Nombre: ${buscar.nombre}- Apellido: ${buscar.apellido}`
+      `Detalles del producto Nombre: ${buscar.nombre}- Precio: ${buscar.precio}`
     );
   }
 }
 
 //Funcion para eliminar un usuario
-function eliminarUsuario() {
-  let email = prompt("Que usuario quiere eliminar").toUpperCase().trim();
-  let contraseña = prompt("Ingrese la contraseña").trim();
-  const buscarIndice = listaUsuarios.findIndex(
-    (x) => x.email === email && x.contraseña === contraseña
+function eliminarProducto() {
+  let producto = document.getElementById('eliminar')
+   const buscarIndice = listaProductos.findIndex(
+    (x) => x.nombre === producto.value.trim().toUpperCase()
   ); //Busco el indice del elemento que quiero eliminar
   if (buscarIndice === -1) {
-    alert("El usuario que intenta eliminar no existe");
+    alert("El producto que intenta eliminar no existe");
   } else {
     //Elimino el usuario en base al indice que devuelve buscarIndice
-    listaUsuarios.splice(buscarIndice, 1);
-    alert("Usuario eliminado correctamente");
+    listaProductos.splice(buscarIndice, 1);
+    alert("Producto eliminado correctamente");
     //Muestro en consola el array sin el elemento eliminado
-    console.table(listaUsuarios);
+    console.table(listaProductos);
   }
 }
 
@@ -124,10 +122,16 @@ function modificarContraseñaUsuario() {
     console.table(listaUsuarios);
   }
 }
-const agregar = document.getElementById('agregar')
+debugger
 
+const agregar = document.getElementById('agregar')
 agregar.addEventListener('click', crearProducto)
 
+const buscar = document.getElementById('buscar')
+buscar.addEventListener('click', buscarProducto)
+
+const eliminar = document.getElementById('btn-eliminar')
+eliminar.addEventListener('click', eliminarProducto)
 //Se llama a la funcion crearUsuario
 // crearUsuario();
 
