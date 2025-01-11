@@ -79,6 +79,13 @@ function crearProducto() {
   //Listo por consola en forma de tabla para visualizar lo que se agrega
   console.table(listaProductos);
 
+let contenedor = document.querySelector('.card')
+contenedor.innerHTML += `<h4> ${producto.nombre}</h4>
+<p>Precio:$${producto.precio}</p>
+<p>Stock: ${producto.stock}</p>`
+
+document.body.appendChild(contenedor)
+
 }
 
 //Funcion para buscar un usuario
