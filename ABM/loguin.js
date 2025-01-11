@@ -22,6 +22,23 @@ const validarDatos = (img, nombre, precio, stock) => {
   }
 };
 
+const limpiarCampos = () => {
+  const imagen = document.getElementById('img')
+  const nombre = document.getElementById('nombre')
+  const precio = document.getElementById('precio')
+  const stock = document.getElementById('stock')
+  const producto = document.getElementById('buscador')
+  const eliminar = document.getElementById('eliminar')
+
+
+  imagen.value = ''
+  nombre.value = ''
+  precio.value = ''
+  stock.value = ''
+  producto.value = ''
+  eliminar.value = ''
+
+}
 //Se crea este array para almacenar los objetos
 const listaProductos = [];
 
@@ -58,10 +75,7 @@ function crearProducto() {
   }
 
   //Al terminar de agregar el producto limpio los inputs para una nueva carga
-  imagen.value = ''
-  nombre.value = ''
-  precio.value = ''
-  stock.value = ''
+  limpiarCampos()
   //Listo por consola en forma de tabla para visualizar lo que se agrega
   console.table(listaProductos);
 
@@ -71,7 +85,6 @@ function crearProducto() {
 function buscarProducto() {
 
   let producto = document.getElementById('buscador')
-  
 
   const buscar = listaProductos.find(
     //Busco al usuario ingresado en el array
@@ -84,12 +97,13 @@ function buscarProducto() {
       `Detalles del producto Nombre: ${buscar.nombre}- Precio: ${buscar.precio}`
     );
   }
+  limpiarCampos()
 }
 
 //Funcion para eliminar un usuario
 function eliminarProducto() {
   let producto = document.getElementById('eliminar')
-   const buscarIndice = listaProductos.findIndex(
+  const buscarIndice = listaProductos.findIndex(
     (x) => x.nombre === producto.value.trim().toUpperCase()
   ); //Busco el indice del elemento que quiero eliminar
   if (buscarIndice === -1) {
@@ -101,6 +115,7 @@ function eliminarProducto() {
     //Muestro en consola el array sin el elemento eliminado
     console.table(listaProductos);
   }
+  limpiarCampos()
 }
 
 //Funcion para poder modificar un usuario agregado
@@ -132,6 +147,8 @@ buscar.addEventListener('click', buscarProducto)
 
 const eliminar = document.getElementById('btn-eliminar')
 eliminar.addEventListener('click', eliminarProducto)
+
+
 //Se llama a la funcion crearUsuario
 // crearUsuario();
 
