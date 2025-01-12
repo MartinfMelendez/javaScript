@@ -79,12 +79,12 @@ function crearProducto() {
   //Listo por consola en forma de tabla para visualizar lo que se agrega
   console.table(listaProductos);
 
-let contenedor = document.querySelector('.card')
-contenedor.innerHTML += `<h4> ${producto.nombre}</h4>
+  let contenedor = document.querySelector('.card')
+  contenedor.innerHTML += `<h4> ${producto.nombre}</h4>
 <p>Precio:$${producto.precio}</p>
 <p>Stock: ${producto.stock}</p>`
 
-document.body.appendChild(contenedor)
+  document.body.appendChild(contenedor)
 
 }
 
@@ -92,17 +92,18 @@ document.body.appendChild(contenedor)
 function buscarProducto() {
 
   let producto = document.getElementById('buscador')
+  let buscarjson = JSON.parse(localStorage.getItem('productos'))
 
-  const buscar = listaProductos.find(
-    //Busco al usuario ingresado en el array
-    (x) => x.nombre === producto.value.toUpperCase().trim()//Se utiliza estas propiedades para controlar lo que se carga
-  );
+const buscar = buscarjson.find(x=> x.nombre = producto.value.trim().toUpperCase())
+  //Busco al usuario ingresado en el array
+
   if (!buscar) {
     alert("El producto buscado no se encuentra");
   } else {
-    alert(
-      `Detalles del producto Nombre: ${buscar.nombre}- Precio: ${buscar.precio}`
-    );
+    let card = document.querySelector('.card');
+    card.innerHTML = `<h4> ${buscar.nombre}</h4>
+<p>Precio:$${buscar.precio}</p>
+<p>Stock: ${buscar.stock}</p>`
   }
   limpiarCampos()
 }
@@ -144,7 +145,6 @@ function modificarContraseñaUsuario() {
     console.table(listaUsuarios);
   }
 }
-debugger
 
 const agregar = document.getElementById('agregar')
 agregar.addEventListener('click', crearProducto)
