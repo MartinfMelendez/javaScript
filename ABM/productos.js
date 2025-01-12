@@ -88,19 +88,21 @@ function crearProducto() {
 
 }
 
-//Funcion para buscar un usuario
+//Funcion para buscar un producto
 function buscarProducto() {
 
   let producto = document.getElementById('buscador')
+  //Se obtienen los datos del localStorage y se los transforma a formate texto para poder utilizarlo con los metodos del array
   let buscarjson = JSON.parse(localStorage.getItem('productos'))
 
-const buscar = buscarjson.find(x=> x.nombre = producto.value.trim().toUpperCase())
-  //Busco al usuario ingresado en el array
+const buscar = buscarjson.find(x=> x.nombre === producto.value.trim().toUpperCase())
+  //Busco el producto ingresado en el array
 
   if (!buscar) {
     alert("El producto buscado no se encuentra");
   } else {
     let card = document.querySelector('.card');
+    card.innerHTML=''
     card.innerHTML = `<h4> ${buscar.nombre}</h4>
 <p>Precio:$${buscar.precio}</p>
 <p>Stock: ${buscar.stock}</p>`
@@ -108,20 +110,22 @@ const buscar = buscarjson.find(x=> x.nombre = producto.value.trim().toUpperCase(
   limpiarCampos()
 }
 
-//Funcion para eliminar un usuario
+//Funcion para eliminar un producto
 function eliminarProducto() {
   let producto = document.getElementById('eliminar')
-  const buscarIndice = listaProductos.findIndex(
+  let buscarJSON = JSON.parse(localStorage.getItem('productos'))
+  const buscarIndice = buscarJSON.findIndex(
     (x) => x.nombre === producto.value.trim().toUpperCase()
   ); //Busco el indice del elemento que quiero eliminar
   if (buscarIndice === -1) {
     alert("El producto que intenta eliminar no existe");
   } else {
-    //Elimino el usuario en base al indice que devuelve buscarIndice
-    listaProductos.splice(buscarIndice, 1);
+    //Elimino el producto en base al indice que devuelve buscarIndice
+    buscarJSON.splice(buscarIndice, 1);
     alert("Producto eliminado correctamente");
     //Muestro en consola el array sin el elemento eliminado
-    console.table(listaProductos);
+    let nuevaLista = JSON.stringify(buscarJSON)
+    localStorage.setItem('productos', nuevaLista)
   }
   limpiarCampos()
 }
