@@ -43,7 +43,8 @@ class Productos {
       console.log(`Datos del producto Nombre: ${buscar.nombre}, Precio: $${buscar.precio}, Stock: ${buscar.stock}`);
       card.innerHTML = `<p>Nombre: ${buscar.nombre}</p>
       <p>Precio: ${buscar.precio}</p>
-      <p>Stock: ${buscar.stock}</p>`
+      <p>Stock: ${buscar.stock}</p>
+      <button>Comprar</button>`
     }
   }
   //Se crea una funcion para que el usuario al precionar una letra le muestre productos con esas letras
@@ -63,7 +64,8 @@ class Productos {
         card.classList.add('card')
         card.innerHTML += `<p>Nombre: ${producto.nombre}</p>
       <p>Precio: ${producto.precio}</p>
-      <p>Stock: ${producto.stock}</p>`
+      <p>Stock: ${producto.stock}</p>
+      <button>Comprar</button>`
       container.appendChild(card)
       })
       
@@ -111,7 +113,8 @@ document.addEventListener('DOMContentLoaded', () => {
     card.classList.add('card')
     card.innerHTML += `<p>Nombre: ${x.nombre}</p>
       <p>Precio: ${x.precio}</p>
-      <p>Stock: ${x.stock}</p>`
+      <p>Stock: ${x.stock}</p>
+      <button>Comprar</button>`
 
     container.appendChild(card)
   })
