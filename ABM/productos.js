@@ -79,12 +79,15 @@ function crearProducto() {
   //Listo por consola en forma de tabla para visualizar lo que se agrega
   console.table(listaProductos);
 
-  let contenedor = document.querySelector('.card')
-  contenedor.innerHTML += `<h4> ${producto.nombre}</h4>
+  let contenedor = document.querySelector('.container-card')
+  let card = document.createElement('div')
+  card.classList.add('card')
+  card.innerHTML += `<img>${producto.imagen}</img>
+  <h4> ${producto.nombre}</h4>
 <p>Precio:$${producto.precio}</p>
 <p>Stock: ${producto.stock}</p>`
 
-  document.body.appendChild(contenedor)
+  contenedor.appendChild(card)
 
 }
 
@@ -95,17 +98,22 @@ function buscarProducto() {
   //Se obtienen los datos del localStorage y se los transforma a formate texto para poder utilizarlo con los metodos del array
   let buscarjson = JSON.parse(localStorage.getItem('productos'))
 
-const buscar = buscarjson.find(x=> x.nombre === producto.value.trim().toUpperCase())
+  const buscar = buscarjson.find(x => x.nombre === producto.value.trim().toUpperCase())
   //Busco el producto ingresado en el array
 
   if (!buscar) {
     alert("El producto buscado no se encuentra");
+    preload()
   } else {
-    let card = document.querySelector('.card');
-    card.innerHTML=''
-    card.innerHTML = `<h4> ${buscar.nombre}</h4>
-<p>Precio:$${buscar.precio}</p>
-<p>Stock: ${buscar.stock}</p>`
+    let contenedor = document.querySelector('.container-card')
+    contenedor.innerHTML = ''
+    let card = document.createElement('div')
+    card.classList.add('card')
+    card.innerHTML += `<img>${buscar.imagen}</img>
+<p>Nombre: ${buscar.nombre}</p>
+      <p>Precio: ${buscar.precio}</p>
+      <p>Stock: ${buscar.stock}</p>`
+    contenedor.appendChild(card)
   }
   limpiarCampos()
 }
@@ -126,8 +134,10 @@ function eliminarProducto() {
     //Muestro en consola el array sin el elemento eliminado
     let nuevaLista = JSON.stringify(buscarJSON)
     localStorage.setItem('productos', nuevaLista)
+
   }
   limpiarCampos()
+  preload()
 }
 
 //Funcion para poder modificar un usuario agregado
@@ -150,6 +160,26 @@ function modificarContraseñaUsuario() {
   }
 }
 
+//Funcion para cargar los datos del localStorage
+const preload = () => {
+
+  let productos = JSON.parse(localStorage.getItem('productos'))
+  const contenedor = document.querySelector('.container-card')
+contenedor.innerHTML=''
+  if (productos) {
+    productos.forEach(x => {
+      const div = document.createElement('div')
+      div.classList.add('card')
+      div.innerHTML = `<img>${x.imagen}</img>
+      <p>Nombre: ${x.nombre}</p>
+      <p>Precio: ${x.precio}</p>
+      <p>Stock: ${x.stock}</p>`
+      contenedor.appendChild(div)
+    });
+  }
+}
+
+preload()
 const agregar = document.getElementById('agregar')
 agregar.addEventListener('click', crearProducto)
 

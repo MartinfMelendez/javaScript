@@ -1,4 +1,4 @@
-//Se crea una clase Usuarios
+//Se crea una clase Productos
 const arrayProducto = []
 class Productos {
   //Se crea un constructor para la clase
@@ -23,6 +23,8 @@ class Productos {
   crearProducto(id, imagen, nombre, precio, stock) {
     if (this.validarDatos(id, imagen, nombre, precio, stock)) {
       arrayProducto.push(new Productos(id, imagen, nombre, precio, stock));
+      let guardar = JSON.stringify(arrayProducto)
+      localStorage.setItem('productos', guardar)
     }
 
     console.table(arrayProducto);
@@ -30,6 +32,8 @@ class Productos {
   //Se crea un metodo para buscar un usuario
   buscarProducto() {
     const producto = document.getElementById('buscar')
+    let container = document.querySelector('.card-container')
+    container.innerHTML = ''
     const card = document.querySelector('.card')
 
     const buscar = arrayProducto.find((x) => x.nombre === producto.value);
@@ -42,24 +46,27 @@ class Productos {
       <p>Stock: ${buscar.stock}</p>`
     }
   }
-//Se crea una funcion para que el usuario al precionar una letra le muestre productos con esas letras
+  //Se crea una funcion para que el usuario al precionar una letra le muestre productos con esas letras
   buscarInput() {
     const productos = document.getElementById('buscar')
-    const card = document.querySelector('.card')
-
+    let container = document.querySelector('.card-container')
+    container.innerHTML = ''
     const buscar = arrayProducto.filter(producto =>
       producto.nombre.includes(productos.value)
     );
     if (buscar.length === 0) {
       console.log('producto no existe')
     } else {
-      card.innerHTML = ''
-      buscar.forEach(producto => {
 
+      buscar.forEach(producto => {
+        let card = document.createElement('div')
+        card.classList.add('card')
         card.innerHTML += `<p>Nombre: ${producto.nombre}</p>
       <p>Precio: ${producto.precio}</p>
       <p>Stock: ${producto.stock}</p>`
+      container.appendChild(card)
       })
+      
     }
   }
   //Se crea un metodo para eliminar un usuario
@@ -94,16 +101,42 @@ class Productos {
   }
 }
 
+//Funcion para cargar todos los productos del localStorage cuando se inicializa la pagina
+document.addEventListener('DOMContentLoaded', () => {
+  let productos = JSON.parse(localStorage.getItem('productos'))
+  let container = document.querySelector('.card-container')
+  //let contenidoHTML =''
+  productos.forEach(x => {
+    let card = document.createElement('div');
+    card.classList.add('card')
+    card.innerHTML += `<p>Nombre: ${x.nombre}</p>
+      <p>Precio: ${x.precio}</p>
+      <p>Stock: ${x.stock}</p>`
+
+    container.appendChild(card)
+  })
+  //div.innerHTML = contenidoHTML
+})
 
 producto = new Productos();
-producto.crearProducto(1, "calza.jpg", 'calza', 25000, 12);
-producto.crearProducto(2, "top.jpg", 'top', 18000, 5);
-producto.crearProducto(3, "conjunto.jpg", 'conjunto', 30000, 10);
+producto.crearProducto(1, "calza.jpg", 'calza', 32600, 12);
+producto.crearProducto(2, "top.jpg", 'top', 30000, 5);
+producto.crearProducto(3, "conjunto.jpg", 'conjunto', 50000, 10);
+producto.crearProducto(4, "calza.jpg", 'calza', 32600, 12);
+producto.crearProducto(5, "top.jpg", 'top', 30000, 5);
+producto.crearProducto(6, "conjunto.jpg", 'conjunto', 50000, 10);
+producto.crearProducto(7, "calza.jpg", 'calza', 32600, 12);
+producto.crearProducto(8, "top.jpg", 'top', 30000, 5);
+producto.crearProducto(9, "conjunto.jpg", 'conjunto', 50000, 5);
+
 
 const btnBuscar = document.getElementById('btn-buscar')
 btnBuscar.addEventListener('click', producto.buscarInput)
 const input = document.getElementById('buscar')
 input.addEventListener('input', producto.buscarInput)
+
+
+
 // usuario1.crearUsuario("carol", "flexxus");
 // usuario1.crearUsuario("irina", "bonnie");
 // usuario1.crearUsuario("tomas", "futbol");
