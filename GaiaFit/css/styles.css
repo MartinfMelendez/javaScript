@@ -21,56 +21,84 @@ body{
     gap: 20px;
     list-style: none;
   }
-
-
-  .container-card {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 columnas de igual tamaño */
-    gap: 20px; /* Espacio entre las tarjetas */
+/* Contenedor de todas las cards */
+.container-card {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    /* Espacio entre las cards */
+    justify-content: center;
+    /* Centrar las cards */
     padding: 20px;
-    justify-items: center; /* Centra las tarjetas dentro de sus celdas */
-    align-items: start; /* Alinea las tarjetas al inicio (parte superior de la celda) */
 }
 
-
-
+/* Estilo básico de la card */
 .card {
     background-color: white;
-    border-radius: 8px; /* Bordes redondeados */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    border-radius: 10px;
+    /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Sombra suave */
     padding: 20px;
-    max-width: 300px; /* Ancho máximo de la tarjeta */
-    width: 100%;
+    width: 250px;
+    /* Ancho de la card */
     text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transición para hover */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* Transición suave para el hover */
 }
 
+/* Efecto hover */
 .card:hover {
-    transform: translateY(-10px); /* Eleva la tarjeta cuando se pasa el mouse */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra más intensa en hover */
+    transform: translateY(-10px);
+    /* Eleva la card cuando pasa el mouse */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    /* Sombra más intensa */
 }
 
+/* Estilo de la imagen */
+.card img {
+    width: 100%;
+    /* Hace que la imagen ocupe todo el ancho de la card */
+    height: 180px;
+    /* Limita la altura de la imagen */
+    object-fit: cover;
+    /* Recorta la imagen si es necesario */
+    border-radius: 10px;
+    /* Bordes redondeados en la imagen */
+    margin-bottom: 15px;
+    /* Espacio entre la imagen y el texto */
+}
+
+/* Estilo del texto */
 .card p {
-    font-size: 16px;
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
     color: #333;
+    /* Color de texto */
     margin: 10px 0;
+    /* Margen superior e inferior */
 }
 
-/* Estilo para el precio */
-.card p:nth-child(2) {
-    font-weight: bold;
-    color: #007bff; /* Color azul para el precio */
+/* Estilo del botón */
+.card button {
+    background-color: #4CAF50;
+    /* Color de fondo verde */
+    color: white;
+    /* Texto blanco */
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    /* Bordes redondeados */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    /* Transición suave para el hover */
+    margin-top: 10px;
 }
 
-/* Estilo para el nombre de producto */
-.card p:nth-child(1) {
-    font-size: 18px;
-    font-weight: bold;
-    color: #333;
+/* Efecto hover en el botón */
+.card button:hover {
+    background-color: #45a049;
+    /* Color verde más oscuro al pasar el mouse */
 }
 
-/* Estilo para el stock */
-.card p:nth-child(3) {
-    color: #28a745; /* Color verde para stock */
-    font-weight: normal;
-}

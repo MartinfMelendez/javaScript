@@ -140,32 +140,14 @@ function eliminarProducto() {
   preload()
 }
 
-//Funcion para poder modificar un usuario agregado
-function modificarContraseñaUsuario() {
-  let email = prompt("Ingrese el mail del usuario que quiere modificar?")
-    .toUpperCase()
-    .trim();
-  let contraseña = prompt("Ingrese su contraseña").trim();
-  const buscarUsuario = listaUsuarios.find(
-    //Uso el metodo find() para buscar el usuario
-    (x) => x.email === email && x.contraseña === contraseña
-  );
-  if (!buscarUsuario) {
-    alert("El usuario que intenta modificar no existe. Verifique Por favor");
-  } else {
-    let newPassword = prompt("Ingrese su nueva contraseña");
-    buscarUsuario.contraseña = newPassword; //Se modifica la contraseña del usuario ingresado
-    alert("Se modifico correctamente la contraseña");
-    console.table(listaUsuarios);
-  }
-}
+
 
 //Funcion para cargar los datos del localStorage
 const preload = () => {
 
   let productos = JSON.parse(localStorage.getItem('productos'))
   const contenedor = document.querySelector('.container-card')
-contenedor.innerHTML=''
+  contenedor.innerHTML = ''
   if (productos) {
     productos.forEach(x => {
       const div = document.createElement('div')
