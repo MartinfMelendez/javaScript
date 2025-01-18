@@ -43,10 +43,11 @@ class Productos {
       alert("El producto que intenta ingresar ya existe");
       return;
     }
-
     arrayProducto.push(producto);
     let guardar = JSON.stringify(arrayProducto);
     localStorage.setItem("productos", guardar);
+
+    limpiarCampos()
   }
 
   //Se crea un metodo para buscar un producto
@@ -75,8 +76,10 @@ class Productos {
 
       }
     }
+    limpiarCampos()
   }
-  //Se crea una funcion para que el producto al precionar una letra le muestre productos con esas letras
+
+  //Se crea una funcion para que el producto al presionar una letra le muestre productos con esas letras
   buscarInput() {
     const productos = document.getElementById("buscar");
     let container = document.querySelector(".container-card");
@@ -94,7 +97,7 @@ class Productos {
   }
   //Se crea un metodo para eliminar un usuario
   eliminarProducto() {
-    //Se crea una variaable para buscar el indice del producto que queremos eliminar
+    //Se crea una variable para buscar el indice del producto que queremos eliminar
     let nombre = document.getElementById("eliminar").value.toUpperCase().trim();
     let producto = JSON.parse(localStorage.getItem("productos"));
     const eliminar = producto.findIndex((x) => x.nombre === nombre);
@@ -110,6 +113,7 @@ class Productos {
       alert("Producto eliminado correctamente");
       contenedor.innerHTML = "";
     }
+    limpiarCampos()
   }
   //Se crea un metodo para buscar un usuario
   // modificarUsuario(us, email, contraseña) {
@@ -131,6 +135,36 @@ class Productos {
   //   }
   // }
 }
+
+function crearCard(imagen, nombre, precio, stock) {
+  let contenedor = document.querySelector('.container-card')
+  let card = document.createElement('div')
+  card.classList.add('card')
+  card.innerHTML += `<img src=".${imagen}">
+  <p>Nombre: <b>${nombre}</b></p>
+    <p>Precio: ${precio}</p>
+    <p>Stock: ${stock}</p>
+    <button value='agregar'>Comprar</button>`
+
+  contenedor.appendChild(card)
+}
+
+function limpiarCampos() {
+  const imagen = document.getElementById("imagen")
+  const nombre = document.getElementById("nombre")
+  const precio = document.getElementById("precio")
+  const stock = document.getElementById("stock")
+  const eliminado = document.getElementById("eliminar")
+  const producto = document.getElementById("buscar");
+
+  imagen.value = ''
+  nombre.value = ''
+  precio.value = ''
+  stock.value = ''
+  eliminado.value = ''
+  producto.value = ''
+}
+
 
 producto = new Productos();
 
@@ -159,15 +193,3 @@ if (!document.querySelector('.ABM')) {
   input.addEventListener('input', producto.buscarInput)
 }
 
-function crearCard(imagen, nombre, precio, stock) {
-  let contenedor = document.querySelector('.container-card')
-  let card = document.createElement('div')
-  card.classList.add('card')
-  card.innerHTML += `<img src=".${imagen}">
-  <p>Nombre: <b>${nombre}</b></p>
-    <p>Precio: ${precio}</p>
-    <p>Stock: ${stock}</p>
-    <button value='agregar'>Comprar</button>`
-
-  contenedor.appendChild(card)
-}
