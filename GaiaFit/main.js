@@ -71,18 +71,8 @@ class Productos {
         let contenedor = document.querySelector(".container-card");
         contenedor.innerHTML = "";
 
-        let div = document.createElement("div"); // Creamos el div para la card
-        div.classList.add("card"); // Añadimos la clase 'card'
+        crearCard(buscar.imagen, buscar.nombre, buscar.precio, buscar.stock)
 
-        // Rellenamos el contenido de la card con la información del producto
-        div.innerHTML = `
-    <img src="${buscar.imagen}" alt="${buscar.nombre}">
-    <h4>Nombre: ${buscar.nombre}</h4>
-    <p>Precio: $${buscar.precio}</p>
-    <p>Stock: ${buscar.stock}</p>
-    <button>Comprar</button>
-  `;
-        contenedor.appendChild(div);
       }
     }
   }
@@ -97,15 +87,8 @@ class Productos {
     if (buscar.length === 0) {
       console.log("producto no existe");
     } else {
-      buscar.forEach((producto) => {
-        let card = document.createElement("div");
-        card.classList.add("card");
-        card.innerHTML += `<img src="${producto.imagen}">
-        <p>Nombre: <b>${producto.nombre}</b></p>
-      <p>Precio: ${producto.precio}</p>
-      <p>Stock: ${producto.stock}</p>
-      <button>Comprar</button>`;
-        container.appendChild(card);
+      buscar.forEach((x) => {
+        crearCard(x.imagen, x.nombre, x.precio, x.stock)
       });
     }
   }
@@ -121,7 +104,6 @@ class Productos {
 
       contenedor.innerHTML = "";
     } else {
-      localStorage.clear();
       producto.splice(eliminar, 1);
       let guardar = JSON.stringify(producto);
       localStorage.setItem("productos", guardar);
@@ -172,8 +154,20 @@ if (document.getElementById("btn-eliminar")) {
   });
 }
 
-if(!document.querySelector('.ABM')){
+if (!document.querySelector('.ABM')) {
   const input = document.getElementById('buscar')
-input.addEventListener('input', producto.buscarInput)
+  input.addEventListener('input', producto.buscarInput)
 }
 
+function crearCard(imagen, nombre, precio, stock) {
+  let contenedor = document.querySelector('.container-card')
+  let card = document.createElement('div')
+  card.classList.add('card')
+  card.innerHTML += `<img src=".${imagen}">
+  <p>Nombre: <b>${nombre}</b></p>
+    <p>Precio: ${precio}</p>
+    <p>Stock: ${stock}</p>
+    <button value='agregar'>Comprar</button>`
+
+  contenedor.appendChild(card)
+}

@@ -5,12 +5,14 @@ const preload = () => {
 
     if (productos) {
         productos.forEach(x => {
-            crearCard(x.imagen, x.nombre, x.precio, x.stock)
+            crearCards(x.imagen, x.nombre, x.precio, x.stock)
         })
     }
 }
 
-const crearCard = (img, nombre, precio, stock) => {
+
+//Funcion para crear las cards
+const crearCards = (img, nombre, precio, stock) => {
     let contenedor = document.querySelector('.container-card')
     let card = document.createElement('div')
     card.classList.add('card')
