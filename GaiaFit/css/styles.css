@@ -26,13 +26,9 @@ ul {
 
 /* Contenedor de todas las cards */
 .container-card {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    /* Espacio entre las cards */
-    justify-content: center;
-    /* Centrar las cards */
-    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 100px;
 }
 
 /* Estilo básico de la card */
@@ -105,30 +101,65 @@ ul {
     /* Color verde más oscuro al pasar el mouse */
 }
 
-.contenedor{
+.contenedor {
     display: flex;
     justify-content: center;
     margin: 20px auto;
 }
 
-.ABM{
+.ABM {
     display: flex;
     gap: 3.125rem;
 }
 
-.ABM div{
-    flex:1;
+.ABM div {
+    flex: 1;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     padding: 20px;
 }
 
-.ABM h2{
+.ABM h2 {
     margin-bottom: 15px;
     font-size: 1.25rem;
-    color:#444
+    color: #444
 }
 
-.ABM p{
+.ABM p {
     font-weight: bold;
+}
+.tabla-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.tabla-productos {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabla-productos th, .tabla-productos td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.tabla-productos th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+#total {
+    font-weight: bold;
+    color: #4CAF50;
+}
+
+img {
+    width: 50px; /* Ajusta el tamaño de las imágenes */
+    height: auto;
+    border-radius: 5px;
 }

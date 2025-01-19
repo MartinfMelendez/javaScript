@@ -46,10 +46,10 @@ class Productos {
 
     if (existe) {
       Swal.fire({
-        title: 'Error!',
+        title: 'Upps!',
         text: 'El producto ya se encuentra cargado',
         icon: 'error',
-        confirmButtonText: 'Ok :('
+        confirmButtonText: 'Aceptar'
       })
       limpiarCampos()
       return;
@@ -76,7 +76,7 @@ class Productos {
     if (!productosJSON || productosJSON.length === 0) {
       Swal.fire({
         title: 'Error!',
-        text: 'No hay productos con ese nombre',
+        text: 'No se encontro el producto',
         icon: 'error',
         confirmButtonText: 'Aceptar'
       })
@@ -85,9 +85,9 @@ class Productos {
 
     if (producto.value === "") {
       Swal.fire({
-        title: 'Error!',
-        text: 'Se deben completar todos los campos ',
-        icon: 'error',
+        title: 'Verificar!',
+        text: 'Complete el campo para buscar',
+        icon: 'info',
         confirmButtonText: 'Aceptar'
       })
     } else {
@@ -96,10 +96,10 @@ class Productos {
       );
       if (!buscar) {
         Swal.fire({
-          title: 'Error!',
-          text: 'No hay productos con esa descripcion',
+          title: 'Upps!',
+          text: 'No se encontro el producto buscado',
           icon: 'error',
-          confirmButtonText: 'Ok :('
+          confirmButtonText: 'Aceptar'
         })
       } else {
         let contenedor = document.querySelector(".container-card");
@@ -136,16 +136,26 @@ class Productos {
     let producto = JSON.parse(localStorage.getItem("productos"));
     const eliminar = producto.findIndex((x) => x.nombre === nombre);
     let contenedor = document.querySelector(".container-card");
+    if (nombre === '') {
+      Swal.fire({
+        title: 'Verificar!',
+        text: 'Se debe completar el campo con algun producto',
+        icon: 'info',
+        confirmButtonText: 'Continuar'
+      });
+      return
+    }
     if (eliminar === -1) {
       Swal.fire({
-        title: 'Error!',
+        title: 'Upps!',
         text: 'No existen productos para eliminar',
         icon: 'error',
-        confirmButtonText: 'Ok :('
+        confirmButtonText: 'Aceptar'
       });
 
       contenedor.innerHTML = "";
     } else {
+      localStorage.clear()
       producto.splice(eliminar, 1);
       let guardar = JSON.stringify(producto);
       localStorage.setItem("productos", guardar);
@@ -186,7 +196,7 @@ function crearCard(imagen, nombre, precio, stock) {
   let contenedor = document.querySelector('.container-card')
   let card = document.createElement('div')
   card.classList.add('card')
-  card.innerHTML += `<img src=".${imagen}">
+  card.innerHTML += `<img src="${imagen}">
   <p>Nombre: <b>${nombre}</b></p>
     <p>Precio: ${precio}</p>
     <p>Stock: ${stock}</p>
