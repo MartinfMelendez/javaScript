@@ -11,7 +11,12 @@ class Productos {
   //Se crea un metodo el cual se encarga de validar los datos ingresados
   validarDatos(imagen, nombre, precio, stock) {
     if (imagen === "" || nombre === "" || isNaN(precio) || isNaN(stock)) {
-      alert("Se debe de completar todos los campos");
+      Swal.fire({
+        title: 'Carga de datos',
+        text: 'Se deben completar todos los campos',
+        icon: 'info',
+        confirmButtonText: 'Continuar'
+      })
       return false;
     } else {
       return true;
