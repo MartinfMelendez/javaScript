@@ -1,4 +1,3 @@
-
 //Funcion para cargar todos los productos del localStorage cuando se inicializa la pagina
 const preload = () => {
     let productos = JSON.parse(localStorage.getItem('productos'))
@@ -10,18 +9,21 @@ const preload = () => {
     }
 }
 
-
 //Funcion para crear las cards
 const crearCards = (img, nombre, precio, stock) => {
     let contenedor = document.querySelector('.container-card')
     let card = document.createElement('div')
     card.classList.add('card')
-    card.innerHTML += `<img src="${img}">
-    <p>Nombre: <b>${nombre}</b></p>
-      <p>Precio: ${precio}</p>
+    card.innerHTML += `<img value='${img}' src="${img}">
+    <p value='${nombre}'>Nombre: <b>${nombre}</b></p>
+      <p value='${precio}'>Precio: ${precio}</p>
       <p>Stock: ${stock}</p>
-      <button value='agregar'>Comprar</button>`
+       <button>Comprar</button>` //Se le agrega una class al boton 
 
     contenedor.appendChild(card)
 }
 preload()
+
+
+
+

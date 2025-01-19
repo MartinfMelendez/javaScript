@@ -40,12 +40,25 @@ class Productos {
     let existe = arrayProducto.some((x) => x.nombre === nombre);
 
     if (existe) {
-      alert("El producto que intenta ingresar ya existe");
+      Swal.fire({
+        title: 'Error!',
+        text: 'El producto ya se encuentra cargado',
+        icon: 'error',
+        confirmButtonText: 'Ok :('
+      })
+      limpiarCampos()
       return;
     }
+
     arrayProducto.push(producto);
     let guardar = JSON.stringify(arrayProducto);
     localStorage.setItem("productos", guardar);
+    Swal.fire({
+      title: 'Succes',
+      text: 'Nuevo producto agregado',
+      icon: 'success',
+      confirmButtonText: 'Cool'
+    })
 
     limpiarCampos()
   }
@@ -56,18 +69,33 @@ class Productos {
 
     let productosJSON = JSON.parse(localStorage.getItem("productos"));
     if (!productosJSON || productosJSON.length === 0) {
-      alert("No hay productos disponibles.");
+      Swal.fire({
+        title: 'Error!',
+        text: 'No hay productos con ese nombre',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      })
       return;
     }
 
     if (producto.value === "") {
-      alert("Se debe de completar el campo para buscar un producto");
+      Swal.fire({
+        title: 'Error!',
+        text: 'Se deben completar todos los campos ',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      })
     } else {
       const buscar = productosJSON.find(
         (x) => x.nombre.toUpperCase() === producto.value.toUpperCase()
       );
       if (!buscar) {
-        alert("El producto ingresado no existe");
+        Swal.fire({
+          title: 'Error!',
+          text: 'No hay productos con esa descripcion',
+          icon: 'error',
+          confirmButtonText: 'Ok :('
+        })
       } else {
         let contenedor = document.querySelector(".container-card");
         contenedor.innerHTML = "";
@@ -77,6 +105,7 @@ class Productos {
       }
     }
     limpiarCampos()
+
   }
 
   //Se crea una funcion para que el producto al presionar una letra le muestre productos con esas letras
@@ -103,14 +132,26 @@ class Productos {
     const eliminar = producto.findIndex((x) => x.nombre === nombre);
     let contenedor = document.querySelector(".container-card");
     if (eliminar === -1) {
-      alert("El producto que intenta eliminar no existe");
+      Swal.fire({
+        title: 'Error!',
+        text: 'No existen productos para eliminar',
+        icon: 'error',
+        confirmButtonText: 'Ok :('
+      });
 
       contenedor.innerHTML = "";
     } else {
       producto.splice(eliminar, 1);
       let guardar = JSON.stringify(producto);
       localStorage.setItem("productos", guardar);
-      alert("Producto eliminado correctamente");
+
+      Swal.fire({
+        title: 'Producto eliminado',
+        text: 'Se elimino el producto correctamente',
+        icon: 'success',
+        confirmButtonText: 'Continuar'
+      })
+
       contenedor.innerHTML = "";
     }
     limpiarCampos()
