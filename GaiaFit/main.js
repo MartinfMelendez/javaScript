@@ -115,11 +115,11 @@ class Productos {
 
   //Se crea una funcion para que el producto al presionar una letra le muestre productos con esas letras
   buscarInput() {
-    const productos = document.getElementById("buscar");
+    const productos = document.getElementById("buscar").value.trim().toUpperCase();
     let container = document.querySelector(".container-card");
     container.innerHTML = "";
     const buscar = arrayProducto.filter((producto) =>
-      producto.nombre.includes(productos.value.trim().toUpperCase())
+      producto.nombre.includes(productos)
     );
     if (buscar.length === 0) {
       console.log("producto no existe");
