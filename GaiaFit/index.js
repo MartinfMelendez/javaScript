@@ -1,6 +1,6 @@
 //Funcion para cargar todos los productos del localStorage cuando se inicializa la pagina
 const preload = () => {
-    let productos = JSON.parse(localStorage.getItem('productos'))
+    let productos = JSON.parse(localStorage.getItem('Productos'))
 
     if (productos) {
         productos.forEach(x => {

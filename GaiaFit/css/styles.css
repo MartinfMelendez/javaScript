@@ -1,165 +1,263 @@
+/* Reset de márgenes y padding */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
 }
 
+/* Estilos generales */
 body {
-    background-color: #f7dbfd;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+/* Header y Navbar */
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 1rem 0;
 }
 
 .navbar {
-    background: linear-gradient(to right, #FFF7AD, #FFBAF0);
     display: flex;
-    height: 75px;
+    justify-content: space-between;
     align-items: center;
-    justify-content: space-around;
+    padding: 0 2rem;
 }
 
+.navbar .logo h1 {
+    font-size: 1.8rem;
+}
 
-ul {
+.navbar ul {
     display: flex;
-    gap: 20px;
-    list-style: none;
+    gap: 1.5rem;
 }
 
-/* Contenedor de todas las cards */
+.navbar ul li {
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.navbar ul li:hover {
+    color: #4CAF50;
+}
+
+.buscador {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.buscador input, .buscador button {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: none;
+}
+
+.buscador button {
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+
+.buscador button:hover {
+    background-color: #45a049;
+}
+
+/* Main */
+main {
+    padding: 2rem;
+}
+
+/* Contenedor para los filtros y las cards */
+.prueba {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+/* Sección de filtros */
+.sec-filtros {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 300px;
+    width: 100%;
+}
+
+.sec-filtros label {
+    font-size: 1rem;
+    color: #333;
+}
+
+.sec-filtros input {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.sec-filtros button {
+    padding: 0.6rem 1rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.sec-filtros button:hover {
+    background-color: #45a049;
+}
+
+/* Sección de productos */
+.sec-productos {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: flex-start;
+}
+
+/* Estilo para las tarjetas */
 .container-card {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    padding: 100px;
+    display: grid; /* Convierte el contenedor en un grid */
+    grid-template-columns: repeat(4, 1fr); /* 3 columnas de tamaño igual */
+    grid-gap: 10px;
 }
 
-/* Estilo básico de la card */
 .card {
-    background-color: white;
-    border-radius: 10px;
-    /* Bordes redondeados */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    /* Sombra suave */
-    padding: 20px;
     width: 250px;
-    /* Ancho de la card */
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    /* Transición suave para el hover */
+    height: 500px;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 15px;
 }
 
-/* Efecto hover */
-.card:hover {
-    transform: translateY(-10px);
-    /* Eleva la card cuando pasa el mouse */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    /* Sombra más intensa */
-}
-
-/* Estilo de la imagen */
+/* Imagen dentro de la tarjeta */
 .card img {
     width: 100%;
-    /* Hace que la imagen ocupe todo el ancho de la card */
-    height: 180px;
-    /* Limita la altura de la imagen */
+    height: 150px;
     object-fit: cover;
-    /* Recorta la imagen si es necesario */
-    border-radius: 10px;
-    /* Bordes redondeados en la imagen */
-    margin-bottom: 15px;
-    /* Espacio entre la imagen y el texto */
+    margin-bottom: 10px;
 }
 
-/* Estilo del texto */
-.card p {
-    font-family: 'Arial', sans-serif;
-    font-size: 14px;
+/* Titulo de la tarjeta */
+.card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
     color: #333;
-    /* Color de texto */
-    margin: 10px 0;
-    /* Margen superior e inferior */
+    text-align: center;
 }
 
-/* Estilo del botón */
-.card button {
-    background-color: #4CAF50;
-    /* Color de fondo verde */
-    color: white;
-    /* Texto blanco */
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 5px;
-    /* Bordes redondeados */
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    /* Transición suave para el hover */
-    margin-top: 10px;
+/* Descripción del producto */
+.card p {
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-bottom: 10px;
 }
 
-/* Efecto hover en el botón */
-.card button:hover {
-    background-color: #45a049;
-    /* Color verde más oscuro al pasar el mouse */
-}
-
-.contenedor {
-    display: flex;
-    justify-content: center;
-    margin: 20px auto;
-}
-
-.ABM {
-    display: flex;
-    gap: 3.125rem;
-}
-
-.ABM div {
-    flex: 1;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    padding: 20px;
-}
-
-.ABM h2 {
-    margin-bottom: 15px;
-    font-size: 1.25rem;
-    color: #444
-}
-
-.ABM p {
+/* Precio */
+.card p:last-of-type {
     font-weight: bold;
+    color: #28a745;
+    font-size: 1.1rem;
+    text-align: center;
 }
+
+/* Estilo del campo de cantidad y botón */
+.card input[type="number"] {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.card button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.card button:hover {
+    background-color: #0056b3;
+}
+
+/* Tabla */
 .tabla-container {
-    max-width: 800px;
-    margin: 0 auto;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    border-radius: 10px;
+    margin-top: 3rem;
+    overflow-x: auto;
 }
 
 .tabla-productos {
     width: 100%;
     border-collapse: collapse;
+    margin-bottom: 2rem;
 }
 
-.tabla-productos th, .tabla-productos td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
+.tabla-productos th,
+.tabla-productos td {
+    padding: 1rem;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.tabla-productos td img {
+    width: 100px;           
+    height: auto;          
+    object-fit: cover;     
+    border-radius: 8px;      
 }
 
 .tabla-productos th {
+    background-color: #333;
+    color: #fff;
+}
+
+.tabla-productos td {
+    background-color: #f9f9f9;
+}
+
+.tabla-productos tfoot td {
+    background-color: #fff;
+    font-weight: bold;
+}
+
+.tabla-productos button {
+    padding: 0.5rem 1.2rem;
     background-color: #4CAF50;
     color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.tabla-productos button:hover {
+    background-color: #45a049;
 }
 
 #total {
-    font-weight: bold;
+    font-size: 1.2rem;
     color: #4CAF50;
-}
-
-img {
-    width: 50px; /* Ajusta el tamaño de las imágenes */
-    height: auto;
-    border-radius: 5px;
 }

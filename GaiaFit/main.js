@@ -1,5 +1,5 @@
 //Se crea una clase Productos
-let arrayProducto = JSON.parse(localStorage.getItem("productos")) || []; //Verifica si hay datos en localStorage en caso de estar vacio, crea el array
+let arrayProducto = JSON.parse(sessionStorage.getItem("Productos")) || []; //Verifica si hay datos en sessionStorage en caso de estar vacio, crea el array
 class Productos {
   //Se crea un constructor para la clase
   constructor(id, imagen, nombre, precio, stock) {
@@ -57,7 +57,7 @@ class Productos {
 
     arrayProducto.push(producto);
     let guardar = JSON.stringify(arrayProducto);
-    localStorage.setItem("productos", guardar);
+    sessionStorage.setItem("Productos", guardar);
     Swal.fire({
       title: 'Succes',
       text: 'Nuevo producto agregado',
@@ -72,7 +72,7 @@ class Productos {
   buscarProducto() {
     const producto = document.getElementById("buscar");
 
-    let productosJSON = JSON.parse(localStorage.getItem("productos"));
+    let productosJSON = JSON.parse(sessionStorage.getItem("Productos"));
     if (!productosJSON || productosJSON.length === 0) {
       Swal.fire({
         title: 'Error!',
@@ -133,7 +133,7 @@ class Productos {
   eliminarProducto() {
     //Se crea una variable para buscar el indice del producto que queremos eliminar
     let nombre = document.getElementById("eliminar").value.toUpperCase().trim();
-    let producto = JSON.parse(localStorage.getItem("productos"));
+    let producto = JSON.parse(sessionStorage.getItem("Productos"));
     const eliminar = producto.findIndex((x) => x.nombre === nombre);
     let contenedor = document.querySelector(".container-card");
     if (nombre === '') {
@@ -155,10 +155,10 @@ class Productos {
 
       contenedor.innerHTML = "";
     } else {
-      localStorage.clear()
+      sessionStorage.clear()
       producto.splice(eliminar, 1);
       let guardar = JSON.stringify(producto);
-      localStorage.setItem("productos", guardar);
+      sessionStorage.setItem("Productos", guardar);
 
       Swal.fire({
         title: 'Producto eliminado',
