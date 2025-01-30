@@ -33,12 +33,12 @@
     <main>
         <div class="prueba">
             <section class="sec-filtros">
-                <label for="descripcion">Descripción:</label>
+                <label for="descripcion">Categoria:</label>
                 <select name="" id="descripcion">
-                    <option value="men's clothing">men's clothing</option>
-                    <option value="women's clothing">women's clothing</option>
-                    <option value="jewelery">jewelery</option>
-                    <option value="electronics">electronics</option>
+                    <option class="category" value="men's clothing">men's clothing</option>
+                    <option class="category" value="women's clothing">women's clothing</option>
+                    <option class="category" value="jewelery">jewelery</option>
+                    <option class="category" value="electronics">electronics</option>
                 </select>
 
                 <label for="precio-min">Precio mínimo:</label>
@@ -62,7 +62,9 @@
                     <tr>
                         <th>Imagen</th>
                         <th>Producto</th>
-                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        <th>Precio Unitario</th>
+                        <th>Precio Total</th>
                     </tr>
                 </thead>
                 <tbody id="productos-lista">

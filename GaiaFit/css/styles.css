@@ -123,14 +123,14 @@ main {
     gap: 1.5rem;
     justify-content: flex-start;
 }
-
-/* Estilo para las tarjetas */
+/* Contenedor de la tarjeta */
 .container-card {
     display: grid; /* Convierte el contenedor en un grid */
-    grid-template-columns: repeat(4, 1fr); /* 3 columnas de tamaño igual */
+    grid-template-columns: repeat(4, 1fr); /* 4 columnas de tamaño igual */
     grid-gap: 10px;
 }
 
+/* Estilo de cada tarjeta */
 .card {
     width: 250px;
     height: 500px;
@@ -142,6 +142,7 @@ main {
     flex-direction: column;
     justify-content: space-between;
     padding: 15px;
+    position: relative; /* Para posicionar los elementos dentro */
 }
 
 /* Imagen dentro de la tarjeta */
@@ -179,17 +180,41 @@ main {
     text-align: center;
 }
 
-/* Estilo del campo de cantidad y botón */
-.card input[type="number"] {
-    width: 100%;
-    padding: 5px;
+/* Estilo para el campo de cantidad y los botones de + y - */
+.card .cantidad-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    text-align: center;
 }
 
-.card button {
+.card .cantidad-container button {
+    width: 30px;
+    height: 30px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.card .cantidad-container button:hover {
+    background-color: #0056b3;
+}
+
+.card .cantidad-container input {
+    width: 50px;
+    padding: 5px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    background-color: #f9f9f9;
+}
+
+/* Estilo del botón "Agregar" */
+.card button.agregar {
     width: 100%;
     padding: 10px;
     background-color: #007bff;
@@ -197,11 +222,13 @@ main {
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    margin-top: 10px;
 }
 
-.card button:hover {
+.card button.agregar:hover {
     background-color: #0056b3;
 }
+
 
 /* Tabla */
 .tabla-container {
