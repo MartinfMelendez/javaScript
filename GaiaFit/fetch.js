@@ -8,16 +8,16 @@ const url = "https://fakestoreapi.com/products";
 const contenedor = document.querySelector(".container-card");
 const productos = JSON.parse(sessionStorage.getItem("Productos"));
 
-const arrayProductos = [];
+const arrayProductos = [];//Este array se crea para almacenar los datos del fetch
 fetch(url) //Se utiliza una API que contiene distintos productos para trabajar
   .then((res) => res.json())
   .then((data) => {
     arrayProductos.push(...data);
     sessionStorage.setItem("Productos", JSON.stringify(data)); //Se decide trabajar con sessionStorage
     crearCards(arrayProductos);
-    crearCarrito();
+    crearCarrito();//Me aseguro que se creen despues de obtener los datos de la URL
     crearTabla();
-  });
+  })
 
 //Se crea una funcion para poder crear las tarjetas con los productos
 function crearCards(productos) {
@@ -61,7 +61,8 @@ function crearCarrito() {
   });
 }
 
-function buscarProducto(id, cantidad) {
+//Funcion para buscar un producto
+function buscarProducto(id, cantidad) {//Se le pasa la cantidad para agregarlo al array
   const item = arrayProductos.find((x) => x.id == id);
 
   if (item) {
@@ -75,12 +76,12 @@ function buscarProducto(id, cantidad) {
     }
   }
 
-  sessionStorage.setItem("Carrito", JSON.stringify(carrito));
+  sessionStorage.setItem("Carrito", JSON.stringify(carrito)); //Se guarda en sessionStorage el carrito
 
   crearTabla();
 }
 
-function crearTabla() {
+function crearTabla() { //Separo la creacion de las tablas que simulan el carrito
   const table = document.getElementById("productos-lista");
   const sumary = document.getElementById("total");
 
@@ -134,7 +135,7 @@ btnBuscar.addEventListener("click", () => {
       text: "No hay articulos con esa descripcion",
       duration: 2000,
       style: {
-        background: "linear-gradient(to right, #96c93d,#00b09b )",
+        background: "linear-gradient(to right, #96c93d, #00b09b)",
       },
     }).showToast();
   } else {
@@ -150,12 +151,14 @@ inputBuscar.addEventListener("input", function () {
     crearCards(arrayProductos);
     crearCarrito();
   }
-});
+}
+);
+
+
 
 //Se debe crear una funcion para poder filtrar los productos en base a la categoria
 
 const select = document.querySelector("#descripcion");
-
 select.addEventListener("change", function () {
   let valor = this.value.toUpperCase();
 
@@ -166,6 +169,7 @@ select.addEventListener("change", function () {
   crearCarrito();
 });
 
+//Funcion para agregar los evento a los botones que controlan la catidad de articulos
 function agregarEvento() {
   const contenedorCantidad = document.querySelectorAll(".cantidad-container");
   contenedorCantidad.forEach((x) => {
@@ -187,3 +191,36 @@ function agregarEvento() {
     });
   });
 }
+
+
+//Funcion para utilizar los filtros de precio.
+
+const btnFiltrar = document.getElementById('btn-filtrar')
+btnFiltrar.addEventListener('click', () => {
+
+  //Busco el mayor precio dentro de las listas
+
+  const mayor = arrayProductos.reduce((max, monto) => {
+    return monto.price > max.price ? monto : max
+  }, arrayProductos[0])
+
+
+  const minPrecio = document.getElementById('precio-min').value || 0 //Coloco por defecto el precio minimo
+  const maxPrecio = document.getElementById('precio-max').value || mayor.price //Coloco por defecto el mayor precio que se encuentra disponible
+
+  if (minPrecio < 0 || maxPrecio < 0) {
+    Toastify({
+      text: "El precio debe ser mayor de 0",
+      duration: 2000,
+      style: {
+        background: "linear-gradient(to right,rgb(149, 86, 91),rgb(176, 0, 35))",
+      },
+    }).showToast();
+  } else {
+    const resultado = arrayProductos.filter(x => x.price > minPrecio && x.price < maxPrecio)
+    crearCards(resultado)
+    crearCarrito()
+    agregarEvento()
+  }
+})
+
