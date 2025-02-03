@@ -125,7 +125,7 @@ function crearTabla() { //Separo la creacion de las tablas que simulan el carrit
 function eliminarProducto(index) {
   carrito.splice(index, 1);
   sessionStorage.setItem("Carrito", JSON.stringify(carrito));
-  crearTabla(); 
+  crearTabla();
 }
 
 const btnBuscar = document.getElementById("btn-buscar");
@@ -148,7 +148,7 @@ btnBuscar.addEventListener("click", () => {
   } else if (filtrado.length == 0) {
     Toastify({
       text: "No hay articulos con esa descripcion",
-      duration: 2000,
+      duration: 1000,
       style: {
         background: "linear-gradient(to right, #96c93d, #00b09b)",
       },
@@ -171,7 +171,7 @@ inputBuscar.addEventListener("input", function () {
 
 
 
-//Se debe crear una funcion para poder filtrar los productos en base a la categoria
+//Se crear una funcion para poder filtrar los productos en base a la categoria
 
 const select = document.querySelector("#descripcion");
 select.addEventListener("change", function () {
@@ -180,8 +180,15 @@ select.addEventListener("change", function () {
   const filtro = arrayProductos.filter(
     (x) => x.category.toUpperCase() == valor
   );
-  crearCards(filtro);
-  crearCarrito();
+  if (filtro < 1) {
+    crearCards(arrayProductos)
+    crearCarrito();
+  } else {
+    crearCards(filtro);
+    crearCarrito();
+  }
+
+
 });
 
 //Funcion para agregar los evento a los botones que controlan la catidad de articulos
@@ -209,7 +216,6 @@ function agregarEvento() {
 
 
 //Funcion para utilizar los filtros de precio.
-
 const btnFiltrar = document.getElementById('btn-filtrar')
 btnFiltrar.addEventListener('click', () => {
 
@@ -224,7 +230,7 @@ btnFiltrar.addEventListener('click', () => {
   const maxPrecio = document.getElementById('precio-max').value || mayor.price //Coloco por defecto el mayor precio que se encuentra disponible
 
 
-  if (maxPrecio < minPrecio) {//Se agrega un condicional para que el usuario no puedo poner un precio minimo mayo al precio maximo
+  if (parseFloat(maxPrecio) < parseFloat(minPrecio)) {//Se agrega un condicional para que el usuario no puedo poner un precio minimo mayo al precio maximo
     return Toastify({
       text: "El precio minimo no puede mas grande que el precio maximo. Verifique",
       duration: 2000,
@@ -248,7 +254,32 @@ btnFiltrar.addEventListener('click', () => {
     crearCarrito()
     agregarEvento()
   }
+  recargarFiltros()
 })
+
+
+function recargarFiltros() {
+  const minPrecio = document.getElementById('precio-min')
+
+  minPrecio.addEventListener('input', function () {
+    const buscar = minPrecio.value;
+    if (buscar === "") {
+      crearCards(arrayProductos);
+      crearCarrito();
+    }
+  })
+
+  const maxPrecio = document.getElementById('precio-max')
+  maxPrecio.addEventListener('input', function () {
+    const buscar = maxPrecio.value;
+    if (buscar === "") {
+      crearCards(arrayProductos);
+      crearCarrito();
+    }
+  })
+}
+
+
 
 const finishBuy = document.getElementById('finish')
 //Funcion para verificar si el carrito esta vacio
