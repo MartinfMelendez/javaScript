@@ -208,6 +208,17 @@ btnFiltrar.addEventListener('click', () => {
   const minPrecio = document.getElementById('precio-min').value || 0 //Coloco por defecto el precio minimo
   const maxPrecio = document.getElementById('precio-max').value || mayor.price //Coloco por defecto el mayor precio que se encuentra disponible
 
+
+  if (maxPrecio < minPrecio) {//Se agrega un condicional para que el usuario no puedo poner un precio minimo mayo al precio maximo
+    return Toastify({
+      text: "El precio minimo no puede mas grande que el precio maximo. Verifique",
+      duration: 2000,
+      position: "left",
+      style: {
+        background: "linear-gradient(to right,rgb(149, 86, 91),rgb(176, 0, 35))",
+      },
+    }).showToast();
+  }
   if (minPrecio < 0 || maxPrecio < 0) {
     Toastify({
       text: "El precio debe ser mayor de 0",
@@ -217,10 +228,71 @@ btnFiltrar.addEventListener('click', () => {
       },
     }).showToast();
   } else {
-    const resultado = arrayProductos.filter(x => x.price > minPrecio && x.price < maxPrecio)
+    const resultado = arrayProductos.filter(x => x.price >= minPrecio && x.price <= maxPrecio)
     crearCards(resultado)
     crearCarrito()
     agregarEvento()
   }
 })
 
+const finishBuy = document.getElementById('finish')
+finishBuy.addEventListener('click', () => {
+  mostrarFormulario()
+})
+
+function mostrarFormulario() {
+  Swal.fire({
+    title: 'Finaliza tu Compra',
+    html: `
+          <form id="form-compra">
+              <div class="input-group">
+                  <label class='SW2-label' for="nombre">Nombre Completo</label>
+                  <input class='SW2-select' type="text" id="nombre" name="nombre" required>
+              </div>
+              <div class="input-group">
+                  <label class='SW2-label' for="direccion">Dirección</label>
+                  <input class='SW2-select' type="text" id="direccion" name="direccion" required>
+              </div>
+              <div class="input-group">
+                  <label class='SW2-label' for="telefono">Teléfono</label>
+                  <input class='SW2-select' type="tel" id="telefono" name="telefono" required>
+              </div>
+              <div class="input-group">
+                  <label class='SW2-label' for="email">Correo Electrónico</label>
+                  <input class='SW2-select' type="email" id="email" name="email" required>
+              </div>
+              <div class="input-group">
+                  <label class='SW2-label' for="metodo_pago">Método de Pago</label>
+                  <select class='SW2-select' id="metodo_pago" name="metodo_pago" required>
+                  <option value="transferencia">Transferencia Bancaria</option>
+                  <option value="tarjeta">Tarjeta de Crédito/Débito</option>
+                  </select>
+              </div>
+          </form>
+      `,
+    focusConfirm: false,
+    showCancelButton: true,
+    confirmButtonText: 'Finalizar Compra',
+    cancelButtonText: 'Cancelar',
+    preConfirm: () => {
+      // Aquí puedes obtener los datos del formulario y hacer algo con ellos
+      const nombre = document.getElementById('nombre').value;
+      const direccion = document.getElementById('direccion').value;
+      const telefono = document.getElementById('telefono').value;
+      const email = document.getElementById('email').value;
+      const metodo_pago = document.getElementById('metodo_pago').value;
+
+      if (!nombre || !direccion || !telefono || !email || !metodo_pago) {
+        Swal.showValidationMessage('Por favor, completa todos los campos');
+      } else {
+        // Aquí puedes procesar la compra, por ejemplo, enviando los datos al servidor
+        Swal.fire('Compra Finalizada', 'Gracias por tu compra ' + nombre + '. La misma sera enviada a la siguiente direccion ' + direccion, 'success');
+        const table = document.getElementById("productos-lista");
+        const sumary = document.getElementById("total")
+        sumary.innerText = ''
+        table.innerHTML = ''
+        sessionStorage.removeItem('Carrito')
+      }
+    }
+  });
+}

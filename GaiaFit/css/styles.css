@@ -288,3 +288,22 @@ main {
     font-size: 1.2rem;
     color: #4CAF50;
 }
+
+/*SEEWT ALERT2*/
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.SW2-label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.SW2-label, .SW2-select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
