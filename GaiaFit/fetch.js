@@ -88,7 +88,7 @@ function crearTabla() { //Separo la creacion de las tablas que simulan el carrit
   table.innerHTML = "";
 
   let res = 0;
-  carrito.forEach((x) => {
+  carrito.forEach((x, index) => {
     const tr = document.createElement("tr");
     const tdImagen = document.createElement("td");
     tdImagen.innerHTML = `<img src='${x.image}'>`;
@@ -100,17 +100,32 @@ function crearTabla() { //Separo la creacion de las tablas que simulan el carrit
     tdPrecio.textContent = `$${x.price.toFixed(2)}`;
     const tdPrecioTotal = document.createElement("td");
     tdPrecioTotal.textContent = `$${x.price.toFixed(2) * x.cantidad}`;
+    const tdBoton = document.createElement("td");
+    tdBoton.innerHTML = `<button class='eliminar'>-</button>`;
     tr.appendChild(tdImagen);
     tr.appendChild(tdNombre);
     tr.appendChild(tdCantidad);
     tr.appendChild(tdPrecio);
     tr.appendChild(tdPrecioTotal);
+    tr.appendChild(tdBoton)
     table.appendChild(tr);
 
     res += x.price.toFixed(2) * x.cantidad;
+    //Cada vez que crea el boton se le asigna el evento.
+    const botonEliminar = tr.querySelector(".eliminar");
+    botonEliminar.addEventListener("click", () => {
+      eliminarProducto(index); // El índice se pasa para eliminar el artículo del carrito.
+    });
   });
 
   sumary.innerText = `$${res.toFixed(2)}`;
+}
+
+//Funcion para eliminar un producto del carrito 
+function eliminarProducto(index) {
+  carrito.splice(index, 1);
+  sessionStorage.setItem("Carrito", JSON.stringify(carrito));
+  crearTabla(); 
 }
 
 const btnBuscar = document.getElementById("btn-buscar");
@@ -236,10 +251,21 @@ btnFiltrar.addEventListener('click', () => {
 })
 
 const finishBuy = document.getElementById('finish')
+//Funcion para verificar si el carrito esta vacio
 finishBuy.addEventListener('click', () => {
-  mostrarFormulario()
-})
+  const carrito = sessionStorage.getItem('Carrito')
+  if (carrito) {
+    mostrarFormulario()
+  } else {
+    Swal.fire({
+      title: "Opss",
+      text: "El carrito esta vacio!",
+      icon: "error"
+    });
+  }
 
+})
+//Funcion para mostrar formulario de la compra
 function mostrarFormulario() {
   Swal.fire({
     title: 'Finaliza tu Compra',
@@ -261,13 +287,6 @@ function mostrarFormulario() {
                   <label class='SW2-label' for="email">Correo Electrónico</label>
                   <input class='SW2-select' type="email" id="email" name="email" required>
               </div>
-              <div class="input-group">
-                  <label class='SW2-label' for="metodo_pago">Método de Pago</label>
-                  <select class='SW2-select' id="metodo_pago" name="metodo_pago" required>
-                  <option value="transferencia">Transferencia Bancaria</option>
-                  <option value="tarjeta">Tarjeta de Crédito/Débito</option>
-                  </select>
-              </div>
           </form>
       `,
     focusConfirm: false,
@@ -280,9 +299,8 @@ function mostrarFormulario() {
       const direccion = document.getElementById('direccion').value;
       const telefono = document.getElementById('telefono').value;
       const email = document.getElementById('email').value;
-      const metodo_pago = document.getElementById('metodo_pago').value;
 
-      if (!nombre || !direccion || !telefono || !email || !metodo_pago) {
+      if (!nombre || !direccion || !telefono || !email) {
         Swal.showValidationMessage('Por favor, completa todos los campos');
       } else {
         // Aquí puedes procesar la compra, por ejemplo, enviando los datos al servidor
@@ -294,5 +312,6 @@ function mostrarFormulario() {
         sessionStorage.removeItem('Carrito')
       }
     }
-  });
+  })
 }
+

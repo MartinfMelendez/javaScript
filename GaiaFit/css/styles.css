@@ -63,6 +63,8 @@ header {
     cursor: pointer;
 }
 
+
+
 .buscador button:hover {
     background-color: #45a049;
 }
@@ -278,6 +280,20 @@ main {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+}
+
+.tabla-productos .eliminar {
+    padding: 0.5rem 1.2rem;
+    background-color: #e14444;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.tabla-productos .eliminar:hover {
+    background-color: #bc4a4a;
 }
 
 .tabla-productos button:hover {
